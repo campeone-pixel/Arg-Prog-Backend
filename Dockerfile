@@ -1,4 +1,4 @@
-FROM kwongpan/amazoncorretto
+FROM openjdk
 MAINTAINER mati
 COPY target/conection-0.0.1-SNAPSHOT.jar conection-0.0.1-SNAPSHOT.jar
 EXPOSE 8080
