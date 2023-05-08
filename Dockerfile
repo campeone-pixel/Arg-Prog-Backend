@@ -1,4 +1,4 @@
-FROM amazoncorretto:17
+FROM kwongpan/amazoncorretto
 MAINTAINER mati
 COPY target/conection-0.0.1-SNAPSHOT.jar conection-0.0.1-SNAPSHOT.jar
 EXPOSE 8080
