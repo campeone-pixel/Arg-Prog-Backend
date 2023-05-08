@@ -1,8 +1,9 @@
 package com.example.conection.Modelo;
 
 import jakarta.persistence.*;
+import lombok.Getter;
 
-@Entity
+@Entity@Getter
 public class Skill {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)

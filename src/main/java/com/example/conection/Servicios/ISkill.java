@@ -8,4 +8,5 @@ public interface ISkill {
     void crear(Skill skill);
     void eliminar(long id);
     List<Skill> traer();
+    void editar(Skill skill);
 }

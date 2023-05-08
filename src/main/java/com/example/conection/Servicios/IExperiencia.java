@@ -8,4 +8,5 @@ public interface IExperiencia {
     void crear(Experiencia experiencia);
     void eliminar(long id);
     List<Experiencia> traer();
+    void editar(Experiencia experiencia);
 }

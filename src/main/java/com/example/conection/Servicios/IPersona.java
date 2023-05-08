@@ -8,4 +8,5 @@ public interface IPersona {
     void crear(Persona persona);
     void eliminar(long id);
     List<Persona> traer();
+    void editar(Persona persona);
 }

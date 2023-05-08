@@ -3,9 +3,10 @@ package com.example.conection.Servicios;
 import com.example.conection.Modelo.Experiencia;
 import com.example.conection.Repositorio.ExperienciaRepositorio;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
-
+@Service
 public class ExperienciaServicio implements IExperiencia{
     @Autowired
     private ExperienciaRepositorio repositorio;
@@ -22,5 +23,11 @@ public class ExperienciaServicio implements IExperiencia{
     @Override
     public List<Experiencia> traer() {
         return repositorio.findAll();
+    }
+
+    @Override
+    public void editar(Experiencia experiencia) {
+        repositorio.deleteById(experiencia.getId());
+        repositorio.save(experiencia);
     }
 }

@@ -8,4 +8,5 @@ public interface IProyecto {
     void crear(Proyecto proyecto);
     void eliminar(long id);
     List<Proyecto> traer();
+    void editar(Proyecto proyecto);
 }

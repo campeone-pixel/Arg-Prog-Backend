@@ -8,4 +8,5 @@ public interface IEducacion {
     void crear(Educacion educacion);
     void eliminar(long id);
     List<Educacion> traer();
+    void editar(Educacion educacion);
 }
