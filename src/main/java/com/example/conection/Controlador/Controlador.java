@@ -23,8 +23,9 @@ public class Controlador {
     private ProyectoServicio proyectoServicio;
     @Autowired
     private SkillServicio skillServicio;
-
-    //Los get tienen que devolver un string
+    @Autowired
+    private UsuarioService usuarioService;
+    private String token = "trcyvubin";
     @GetMapping("/get/persona")
     public String getPersonas() throws JsonProcessingException {
         DTO dto = new DTO();
@@ -114,5 +115,18 @@ public class Controlador {
     public void editarExperiencia(@RequestBody Experiencia experiencia){
         experienciaServicio.editar(experiencia);
     }
-
+    @PostMapping("/login")
+    public String iniciarSesion(@RequestBody Usuario usuario) throws JsonProcessingException {
+        if(usuarioService.iniciarSesion(usuario)){
+            Token token = new Token();
+            ObjectMapper json = new ObjectMapper();
+            return json.writeValueAsString(token);
+        }else{
+            return null;
+        }
+    }
+    @PostMapping("/crear/usuario")
+    public void crearUsuario(@RequestBody Usuario usuario){
+        usuarioService.crear(usuario);
+    }
 }
