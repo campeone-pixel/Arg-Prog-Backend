@@ -34,6 +34,10 @@ public class Controlador {
         String json = cadena.writeValueAsString(dto.getPersona());
         return json;
     }
+    @PostMapping("/crear/persona")
+    public void crearPersona(@RequestBody Persona persona){
+        personaServicio.crear(persona);
+    }
     @GetMapping("/get/educacion")
     public String getEducaciones() throws JsonProcessingException {
         DTO dto = new DTO();
@@ -94,6 +98,10 @@ public class Controlador {
     @DeleteMapping("/borrar/skill/{id}")
     public void borrarSkill(@PathVariable long id){
         skillServicio.eliminar(id);
+    }
+    @DeleteMapping("/borrar/persona/{id}")
+    public void borrarPersona(@PathVariable long id){
+        personaServicio.eliminar(id);
     }
     @PatchMapping("/editar/persona")
     public void editarPersona(@RequestBody Persona persona){
