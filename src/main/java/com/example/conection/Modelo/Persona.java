@@ -24,4 +24,6 @@ public class Persona {
     private String image_background_header;
     @Column
     private String image_perfil;
+    @Column
+    private String image_sobre_mi;
 }

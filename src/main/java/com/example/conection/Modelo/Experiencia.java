@@ -18,4 +18,6 @@ public class Experiencia {
     private String hasta;
     @Column
     private String empresa;
+    @Column
+    private String descripcion;
 }

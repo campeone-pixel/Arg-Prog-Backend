@@ -14,4 +14,6 @@ public class Proyecto {
     private String descripcion;
     @Column
     private String link;
+    @Column
+    private String link_foto;
 }
