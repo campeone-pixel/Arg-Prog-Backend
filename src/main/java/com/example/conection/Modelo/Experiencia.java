@@ -9,7 +9,7 @@ public class Experiencia {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private long id;
     @Column
-    private String Puesto;
+    private String puesto;
     @Column
     private String lugar;
     @Column
