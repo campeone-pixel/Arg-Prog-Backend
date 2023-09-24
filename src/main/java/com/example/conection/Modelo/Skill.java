@@ -2,8 +2,11 @@ package com.example.conection.Modelo;
 
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.Setter;
 
-@Entity@Getter
+@Entity
+@Getter
+@Setter
 public class Skill {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
