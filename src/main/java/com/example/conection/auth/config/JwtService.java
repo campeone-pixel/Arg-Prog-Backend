@@ -27,12 +27,16 @@ public class  JwtService {
     private long refreshExpiration;
 
     public String extractUsername(String token) {
-        return extractClaim(token, Claims::getSubject);
+        String username = extractClaim(token, Claims::getSubject);
+        System.out.println("Extracted Username: " + username);
+        return username;
     }
 
     public <T> T extractClaim(String token, Function<Claims, T> claimsResolver) {
         final Claims claims = extractAllClaims(token);
-        return claimsResolver.apply(claims);
+        T result = claimsResolver.apply(claims);
+        System.out.println("Extracted Claim: " + result);
+        return result;
     }
 
     public String generateToken(UserDetails userDetails) {

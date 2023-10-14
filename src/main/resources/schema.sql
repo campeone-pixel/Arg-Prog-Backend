@@ -1,0 +1,81 @@
+---- Tabla Persona
+--CREATE TABLE IF NOT EXISTS Persona (
+--    id INT AUTO_INCREMENT PRIMARY KEY,
+--    nombres VARCHAR(255),
+--    apellido VARCHAR(255),
+--    nacionalidad_es VARCHAR(255),
+--    nacionalidad_en VARCHAR(255),
+--    email VARCHAR(255),
+--    sobre_mi_es VARCHAR(1000),
+--    sobre_mi_en VARCHAR(1000),
+--    ocupacion_es VARCHAR(255),
+--    ocupacion_en VARCHAR(255),
+--    image_background_header VARCHAR(1000),
+--    image_perfil VARCHAR(1000),
+--    image_sobre_mi VARCHAR(1000)
+--);
+--
+---- Tabla Educación
+--CREATE TABLE IF NOT EXISTS Educacion (
+--    id INT AUTO_INCREMENT PRIMARY KEY,
+--    escuela VARCHAR(255),
+--    titulo_es VARCHAR(255),
+--    titulo_en VARCHAR(255),
+--    imagen VARCHAR(1000),
+--    carrera_es VARCHAR(255),
+--    carrera_en VARCHAR(255),
+--    inicio DATE,
+--    fin DATE
+--);
+--
+---- Tabla Experiencia
+--CREATE TABLE IF NOT EXISTS Experiencia (
+--    id INT AUTO_INCREMENT PRIMARY KEY,
+--    puesto_es VARCHAR(255),
+--    puesto_en VARCHAR(255),
+--    lugar VARCHAR(255),
+--    desde DATE,
+--    hasta DATE,
+--    empresa VARCHAR(255),
+--    descripcion_es VARCHAR(1000),
+--    descripcion_en VARCHAR(1000)
+--);
+--
+---- Tabla Proyecto
+--CREATE TABLE IF NOT EXISTS Proyecto (
+--    id INT AUTO_INCREMENT PRIMARY KEY,
+--    nombre_es VARCHAR(255),
+--    nombre_en VARCHAR(255),
+--    descripcion_es VARCHAR(1000),
+--    descripcion_en VARCHAR(1000),
+--    link VARCHAR(1000),
+--    link_foto VARCHAR(1000)
+--);
+--
+---- Tabla Skill
+--CREATE TABLE IF NOT EXISTS Skill (
+--    id INT AUTO_INCREMENT PRIMARY KEY,
+--    nombre VARCHAR(255),
+--    porcentaje INT
+--);
+--
+---- Tabla User
+--CREATE TABLE IF NOT EXISTS _user (
+--    id INT AUTO_INCREMENT PRIMARY KEY,
+--    firstname VARCHAR(255),
+--    lastname VARCHAR(255),
+--    email VARCHAR(255),
+--    password VARCHAR(255),
+--    role VARCHAR(255)
+--);
+--
+---- Tabla Token
+--CREATE TABLE IF NOT EXISTS Token (
+--    id INT AUTO_INCREMENT PRIMARY KEY,
+--    token VARCHAR(255) UNIQUE,
+--    tokenType VARCHAR(255),
+--    revoked BOOLEAN,
+--    expired BOOLEAN,
+--    user_id INT,
+--    FOREIGN KEY (user_id) REFERENCES _user(id)
+--);
