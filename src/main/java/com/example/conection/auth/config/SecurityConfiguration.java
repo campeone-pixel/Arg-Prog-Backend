@@ -70,6 +70,7 @@ public class SecurityConfiguration {
                 }))
                 .authorizeHttpRequests()
                 .requestMatchers(
+                        "/error",
                         "/auth/**",
                         "experiencia/todo",
                         "skill/todo",
