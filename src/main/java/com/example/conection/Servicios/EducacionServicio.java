@@ -2,12 +2,13 @@ package com.example.conection.Servicios;
 
 import com.example.conection.Modelo.Educacion;
 import com.example.conection.Repositorio.EducacionRepositorio;
+import com.example.conection.Servicios.interfaces.IEducacion;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 @Service
-public class EducacionServicio implements IEducacion{
+public class EducacionServicio implements IEducacion {
     @Autowired
     private EducacionRepositorio repositorio;
     @Override

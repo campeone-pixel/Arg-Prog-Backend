@@ -2,12 +2,13 @@ package com.example.conection.Servicios;
 
 import com.example.conection.Modelo.Skill;
 import com.example.conection.Repositorio.SkillRepositorio;
+import com.example.conection.Servicios.interfaces.ISkill;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 @Service
-public class SkillServicio implements ISkill{
+public class SkillServicio implements ISkill {
     @Autowired
     private SkillRepositorio repositorio;
     @Override

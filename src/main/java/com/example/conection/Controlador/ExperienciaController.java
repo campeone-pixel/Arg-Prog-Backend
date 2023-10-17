@@ -3,12 +3,10 @@ import com.example.conection.Modelo.Experiencia;
 import com.example.conection.Servicios.ExperienciaServicio;
 
 
-import com.example.conection.Modelo.validators.ValidationService;
-
-import com.example.conection.exceptions.ValidationException;
-import lombok.RequiredArgsConstructor;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
@@ -16,12 +14,16 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/experiencia")
-@RequiredArgsConstructor
+
 public class ExperienciaController {
 
     private final ExperienciaServicio experienciaService;
-    private final ValidationService<Experiencia> validator;
 
+
+    public ExperienciaController(ExperienciaServicio experienciaService) {
+        this.experienciaService = experienciaService;
+
+    }
 
 
 
@@ -33,13 +35,7 @@ public class ExperienciaController {
     }
     @PostMapping("/crear")
     @PreAuthorize("hasAuthority('admin:create')")
-    public ResponseEntity<String> crearExperiencia(@RequestBody Experiencia experiencia) {
-        var violations = validator.validate(experiencia);
-
-        if (!violations.isEmpty()) {
-            String errorMessage = String.join("|", violations);
-            throw new ValidationException(errorMessage);
-        }
+    public ResponseEntity<String> crearExperiencia(@Valid @RequestBody Experiencia experiencia) {
 
         experienciaService.crear(experiencia);
         return ResponseEntity.ok("Experiencia creada exitosamente");

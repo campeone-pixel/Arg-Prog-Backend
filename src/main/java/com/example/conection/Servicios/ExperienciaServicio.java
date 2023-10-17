@@ -2,12 +2,13 @@ package com.example.conection.Servicios;
 
 import com.example.conection.Modelo.Experiencia;
 import com.example.conection.Repositorio.ExperienciaRepositorio;
+import com.example.conection.Servicios.interfaces.IExperiencia;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 @Service
-public class ExperienciaServicio implements IExperiencia{
+public class ExperienciaServicio implements IExperiencia {
     @Autowired
     private ExperienciaRepositorio repositorio;
     @Override
