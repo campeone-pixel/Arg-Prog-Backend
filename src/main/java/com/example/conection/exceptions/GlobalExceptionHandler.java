@@ -1,28 +1,18 @@
 package com.example.conection.exceptions;
 
-
-
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.JwtException;
-import jakarta.validation.ConstraintViolation;
-import jakarta.validation.Validation;
-import jakarta.validation.Validator;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
-import org.springframework.security.authentication.AccountStatusException;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.userdetails.*;
-import org.springframework.security.oauth2.server.resource.InvalidBearerTokenException;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
-
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-
 import org.springframework.http.HttpStatus;
-import org.springframework.web.servlet.NoHandlerFoundException;
+
 
 
 import java.util.*;
@@ -76,18 +66,7 @@ public class GlobalExceptionHandler {
     }
 
 
-    private String resumirErroresDeValidacion(List<FieldError> errors) {
-        StringBuilder resumen = new StringBuilder("Errores de validación:\n");
 
-        for (FieldError error : errors) {
-            resumen.append("- Campo: ").append(error.getField());
-            resumen.append(", Valor rechazado: ").append(error.getRejectedValue());
-            resumen.append(", Error: ").append(error.getDefaultMessage());
-            resumen.append("\n");
-        }
-
-        return resumen.toString();
-    }
 }
 
 
