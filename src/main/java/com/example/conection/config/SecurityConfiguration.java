@@ -36,7 +36,7 @@ public class SecurityConfiguration {
     private final JwtAuthenticationFilter jwtAuthFilter;
     private final AuthenticationProvider authenticationProvider;
     private final LogoutHandler logoutHandler;
-    private final CustomBasicAuthenticationEntryPoint customBasicAuthenticationEntryPoint;
+
 
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
@@ -46,16 +46,6 @@ public class SecurityConfiguration {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .csrf().disable()
-
-                .cors(c -> c.configurationSource(request -> {
-                    CorsConfiguration cors = new CorsConfiguration();
-                    cors.setAllowedOrigins(List.of("*"));
-                    cors.setAllowedMethods(List.of("GET","POST", "PUT", "DELETE", "OPTIONS"));
-                    cors.setAllowedHeaders(List.of("*"));
-                    cors.setExposedHeaders(List.of(HttpHeaders.AUTHORIZATION, HttpHeaders.CONTENT_TYPE));
-                    return cors;
-                }))
                 .authenticationProvider(authenticationProvider)
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
                 .authorizeHttpRequests()
@@ -67,7 +57,6 @@ public class SecurityConfiguration {
                         "proyecto/todo",
                         "educacion/todo",
                         "persona/todo",
-
                         "/swagger-resources",
                         "/swagger-resources/**",
                         "/configuration/ui",
@@ -76,28 +65,29 @@ public class SecurityConfiguration {
                         "/webjars/**",
                         "/swagger-ui.html"
                 )
-
                 .permitAll()
-
-                .requestMatchers(POST, "crear").hasAnyAuthority(ADMIN_CREATE.name(), MANAGER_CREATE.name())
-                .requestMatchers(PUT, "editar").hasAnyAuthority(ADMIN_UPDATE.name(), MANAGER_UPDATE.name())
-                .requestMatchers(DELETE, "eliminar/**").hasAnyAuthority(ADMIN_DELETE.name(), MANAGER_DELETE.name())
-
+                .requestMatchers(POST, "crear").hasAnyAuthority(ADMIN_CREATE.name())
+                .requestMatchers(PUT, "editar").hasAnyAuthority(ADMIN_UPDATE.name())
+                .requestMatchers(DELETE, "eliminar/**").hasAnyAuthority(ADMIN_DELETE.name())
                 .anyRequest()
-
                 .authenticated()
-
                 .and()
-                .httpBasic(httpBasic -> httpBasic.authenticationEntryPoint(this.customBasicAuthenticationEntryPoint))
-
-                .sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and()
-
                 .logout()
                 .logoutUrl("/auth/logout")
                 .addLogoutHandler(logoutHandler)
                 .logoutSuccessHandler((request, response, authentication) -> SecurityContextHolder.clearContext())
+                .and()
+                .cors(c -> c.configurationSource(request -> {
+                    CorsConfiguration cors = new CorsConfiguration();
+                    cors.setAllowedOrigins(List.of("*"));
+                    cors.setAllowedMethods(List.of("GET","POST", "PUT", "DELETE", "OPTIONS"));
+                    cors.setAllowedHeaders(List.of("*"));
+                    cors.setExposedHeaders(List.of(HttpHeaders.AUTHORIZATION, HttpHeaders.CONTENT_TYPE));
+                    return cors;
+                }))
+                .csrf().disable()
+
+
         ;
 
         return http.build();

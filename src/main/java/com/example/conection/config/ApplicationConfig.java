@@ -1,5 +1,6 @@
 package com.example.conection.config;
 import com.example.conection.Modelo.user.UserRepository;
+import com.example.conection.Servicios.UserDataService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -42,4 +43,9 @@ public class ApplicationConfig {
         return new BCryptPasswordEncoder();
     }
 
+
+    @Bean
+    public UserDataService userDataService() {
+        return new UserDataService();
+    }
 }

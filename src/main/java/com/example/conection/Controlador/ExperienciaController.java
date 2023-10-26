@@ -3,12 +3,18 @@ import com.example.conection.Modelo.Experiencia;
 import com.example.conection.Servicios.ExperienciaServicio;
 
 
+import com.example.conection.Servicios.UserDataService;
+import com.example.conection.dto.Result;
+import com.example.conection.dto.UserData;
 import jakarta.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.time.LocalDateTime;
 import java.util.List;
 
 
@@ -18,36 +24,58 @@ import java.util.List;
 public class ExperienciaController {
 
     private final ExperienciaServicio experienciaService;
+    private final UserDataService userDataService;
 
-
-    public ExperienciaController(ExperienciaServicio experienciaService) {
+    @Autowired
+    public ExperienciaController(ExperienciaServicio experienciaService, UserDataService userDataService) {
         this.experienciaService = experienciaService;
-
+        this.userDataService = userDataService;
     }
-
-
 
     @GetMapping("/todo")
-    public List<Experiencia> obtenerExperiencia() {
-
-
-        return experienciaService.traer();
+    public Result obtenerExperiencia() {
+        try {
+            UserData userData = userDataService.getUserData();
+            List<Experiencia> experienciaList = experienciaService.traer();
+            return new Result<>(true, 200, "Success", LocalDateTime.now(), userData, experienciaList);
+        } catch (Exception e) {
+            return new Result<>(false, 500, "Error", LocalDateTime.now(), null,  e.getMessage());
+        }
     }
+
     @PostMapping("/crear")
     @PreAuthorize("hasAuthority('admin:create')")
-    public ResponseEntity<String> crearExperiencia(@Valid @RequestBody Experiencia experiencia) {
-
-        experienciaService.crear(experiencia);
-        return ResponseEntity.ok("Experiencia creada exitosamente");
+    public Result crearExperiencia(@Valid @RequestBody Experiencia experiencia) {
+        try {
+            UserData userData = userDataService.getUserData();
+            experienciaService.crear(experiencia);
+            return new Result<>(true, 200, "Success", LocalDateTime.now(), userData, experiencia);
+        } catch (Exception e) {
+            return new Result<>(false, 500, "Error", LocalDateTime.now(), null,  e.getMessage());
+        }
     }
+
     @PutMapping("/editar")
     @PreAuthorize("hasAuthority('admin:update')")
-    public void editarExperiencia(@RequestBody Experiencia experiencia) {
-        experienciaService.editar(experiencia);
+    public Result editarExperiencia(@Valid @RequestBody Experiencia experiencia) {
+        try {
+            UserData userData = userDataService.getUserData();
+            experienciaService.editar(experiencia);
+            return new Result<>(true, 200, "Success", LocalDateTime.now(), userData, experiencia);
+        } catch (Exception e) {
+            return new Result<>(false, 500, "Error", LocalDateTime.now(), null,  e.getMessage());
+        }
     }
+
     @DeleteMapping("/eliminar/{id}")
     @PreAuthorize("hasAuthority('admin:delete')")
-    public void eliminarExperiencia(@PathVariable long id) {
-        experienciaService.eliminar(id);
+    public Result eliminarExperiencia(@PathVariable long id) {
+        try {
+            UserData userData = userDataService.getUserData();
+            experienciaService.eliminar(id);
+            return new Result<>(true, 200, "Success", LocalDateTime.now(), userData, null);
+        } catch (Exception e) {
+            return new Result<>(false, 500, "Error", LocalDateTime.now(), null,  e.getMessage());
+        }
     }
 }
