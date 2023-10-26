@@ -1,4 +1,4 @@
-package com.example.conection.exceptions;
+package com.example.conection.dto;
 
 /**
  * This class defines the schema of the response. It is used to encapsulate data prepared by

@@ -1,5 +1,7 @@
 package com.example.conection.Controlador;
 
+import com.example.conection.dto.Result;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -26,25 +28,45 @@ public class ProyectoController {
     }
 
     @GetMapping("/todo")
-    public List<Proyecto> obtenerListaProyecto() {
-        return proyectoServicio.traer();
+    public Result obtenerListaProyecto() {
+        try {
+            List<Proyecto> proyectoList = proyectoServicio.traer();
+            return new Result(true, 200, "Success", proyectoList);
+        } catch (Exception e) {
+            return new Result(false, 500, "Error", e.getMessage());
+        }
     }
 
-    @PostMapping("/crear")
     @PreAuthorize("hasAuthority('admin:create')")
-    public void crearProyecto(@RequestBody Proyecto proyecto) {
-        proyectoServicio.crear(proyecto);
+    @PostMapping("/crear")
+    public Result crearProyecto(@Valid @RequestBody Proyecto proyecto) {
+        try {
+            proyectoServicio.crear(proyecto);
+            return new Result(true, 200, "Success", proyecto);
+        } catch (Exception e) {
+            return new Result(false, 500, "Error", e.getMessage());
+        }
     }
 
-    @PutMapping("/editar")
     @PreAuthorize("hasAuthority('admin:update')")
-    public void editarProyecto(@RequestBody Proyecto proyecto) {
-        proyectoServicio.editar(proyecto);
+    @PutMapping("/editar")
+    public Result editarProyecto(@Valid @RequestBody Proyecto proyecto) {
+        try {
+            proyectoServicio.editar(proyecto);
+            return new Result(true, 200, "Success", proyecto);
+        } catch (Exception e) {
+            return new Result(false, 500, "Error", e.getMessage());
+        }
     }
 
-    @DeleteMapping("/eliminar/{id}")
     @PreAuthorize("hasAuthority('admin:delete')")
-    public void eliminarProyecto(@PathVariable long id) {
-        proyectoServicio.eliminar(id);
+    @DeleteMapping("/eliminar/{id}")
+    public Result eliminarProyecto(@PathVariable long id) {
+        try {
+            proyectoServicio.eliminar(id);
+            return new Result(true, 200, "Success", null);
+        } catch (Exception e) {
+            return new Result(false, 500, "Error", e.getMessage());
+        }
     }
 }

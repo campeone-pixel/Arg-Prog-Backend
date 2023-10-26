@@ -1,6 +1,8 @@
 package com.example.conection.Controlador;
 import com.example.conection.Modelo.Persona;
 import com.example.conection.Servicios.PersonaServicio;
+import com.example.conection.dto.Result;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -22,22 +24,45 @@ public class PersonaController {
     }
 
     @GetMapping("/todo")
-    public List<Persona> obtenerListaPersona() {
-        return personaServicio.traer();
+    public Result obtenerListaPersona() {
+        try {
+            List<Persona> personaList = personaServicio.traer();
+            return new Result(true, 200, "Success", personaList);
+        } catch (Exception e) {
+            return new Result(false, 500, "Error", e.getMessage());
+        }
     }
+
     @PreAuthorize("hasAuthority('admin:create')")
     @PostMapping("/crear")
-    public void crearPersona(@RequestBody Persona persona) {
-        personaServicio.crear(persona);
+    public Result crearPersona(@Valid @RequestBody Persona persona) {
+        try {
+            personaServicio.crear(persona);
+            return new Result(true, 200, "Success", persona);
+        } catch (Exception e) {
+            return new Result(false, 500, "Error", e.getMessage());
+        }
     }
+
     @PreAuthorize("hasAuthority('admin:update')")
     @PutMapping("/editar")
-    public void editarPersona(@RequestBody Persona persona) {
-        personaServicio.editar(persona);
+    public Result editarPersona(@Valid @RequestBody Persona persona) {
+        try {
+            personaServicio.editar(persona);
+            return new Result(true, 200, "Success", persona);
+        } catch (Exception e) {
+            return new Result(false, 500, "Error", e.getMessage());
+        }
     }
+
     @PreAuthorize("hasAuthority('admin:delete')")
     @DeleteMapping("/eliminar/{id}")
-    public void eliminarPersona(@PathVariable long id) {
-        personaServicio.eliminar(id);
+    public Result eliminarPersona(@PathVariable long id) {
+        try {
+            personaServicio.eliminar(id);
+            return new Result(true, 200, "Success", null);
+        } catch (Exception e) {
+            return new Result(false, 500, "Error", e.getMessage());
+        }
     }
 }

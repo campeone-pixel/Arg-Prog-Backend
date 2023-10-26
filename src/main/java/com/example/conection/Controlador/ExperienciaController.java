@@ -3,6 +3,7 @@ import com.example.conection.Modelo.Experiencia;
 import com.example.conection.Servicios.ExperienciaServicio;
 
 
+import com.example.conection.dto.Result;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -28,26 +29,45 @@ public class ExperienciaController {
 
 
     @GetMapping("/todo")
-    public List<Experiencia> obtenerExperiencia() {
-
-
-        return experienciaService.traer();
+    public Result obtenerExperiencia() {
+        try {
+            List<Experiencia> experienciaList = experienciaService.traer();
+            return new Result(true, 200, "Success", experienciaList);
+        } catch (Exception e) {
+            return new Result(false, 500, "Error", e.getMessage());
+        }
     }
+
     @PostMapping("/crear")
     @PreAuthorize("hasAuthority('admin:create')")
-    public ResponseEntity<String> crearExperiencia(@Valid @RequestBody Experiencia experiencia) {
-
-        experienciaService.crear(experiencia);
-        return ResponseEntity.ok("Experiencia creada exitosamente");
+    public Result crearExperiencia(@Valid @RequestBody Experiencia experiencia) {
+        try {
+            experienciaService.crear(experiencia);
+            return new Result(true, 200, "Success", experiencia);
+        } catch (Exception e) {
+            return new Result(false, 500, "Error", e.getMessage());
+        }
     }
+
     @PutMapping("/editar")
     @PreAuthorize("hasAuthority('admin:update')")
-    public void editarExperiencia(@RequestBody Experiencia experiencia) {
-        experienciaService.editar(experiencia);
+    public Result editarExperiencia(@Valid @RequestBody Experiencia experiencia) {
+        try {
+            experienciaService.editar(experiencia);
+            return new Result(true, 200, "Success", experiencia);
+        } catch (Exception e) {
+            return new Result(false, 500, "Error", e.getMessage());
+        }
     }
+
     @DeleteMapping("/eliminar/{id}")
     @PreAuthorize("hasAuthority('admin:delete')")
-    public void eliminarExperiencia(@PathVariable long id) {
-        experienciaService.eliminar(id);
+    public Result eliminarExperiencia(@PathVariable long id) {
+        try {
+            experienciaService.eliminar(id);
+            return new Result(true, 200, "Success", null);
+        } catch (Exception e) {
+            return new Result(false, 500, "Error", e.getMessage());
+        }
     }
 }

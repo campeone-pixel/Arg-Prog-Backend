@@ -28,14 +28,14 @@ public class  JwtService {
 
     public String extractUsername(String token) {
         String username = extractClaim(token, Claims::getSubject);
-        System.out.println("Extracted Username: " + username);
+
         return username;
     }
 
     public <T> T extractClaim(String token, Function<Claims, T> claimsResolver) {
         final Claims claims = extractAllClaims(token);
         T result = claimsResolver.apply(claims);
-        System.out.println("Extracted Claim: " + result);
+
         return result;
     }
 

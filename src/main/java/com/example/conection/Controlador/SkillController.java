@@ -1,6 +1,8 @@
 package com.example.conection.Controlador;
 import com.example.conection.Modelo.Skill;
 import com.example.conection.Servicios.SkillServicio;
+import com.example.conection.dto.Result;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -22,26 +24,47 @@ public class SkillController {
         this.skillServicio = skillServicio;
     }
 
+
     @GetMapping("/todo")
-    public List<Skill> obtenerListaSkill() {
-        return skillServicio.traer();
+    public Result obtenerListaSkill() {
+        try {
+            List<Skill> skillList = skillServicio.traer();
+            return new Result(true, 200, "Success", skillList);
+        } catch (Exception e) {
+            return new Result(false, 500, "Error", e.getMessage());
+        }
     }
 
-    @PostMapping("/crear")
     @PreAuthorize("hasAuthority('admin:create')")
-    public void crearSkill(@RequestBody Skill skill) {
-        skillServicio.crear(skill);
+    @PostMapping("/crear")
+    public Result crearSkill(@Valid @RequestBody Skill skill) {
+        try {
+            skillServicio.crear(skill);
+            return new Result(true, 200, "Success", skill);
+        } catch (Exception e) {
+            return new Result(false, 500, "Error", e.getMessage());
+        }
     }
 
-    @PutMapping("/editar")
     @PreAuthorize("hasAuthority('admin:update')")
-    public void editarSkill(@RequestBody Skill skill) {
-        skillServicio.editar(skill);
+    @PutMapping("/editar")
+    public Result editarSkill(@Valid @RequestBody Skill skill) {
+        try {
+            skillServicio.editar(skill);
+            return new Result(true, 200, "Success", skill);
+        } catch (Exception e) {
+            return new Result(false, 500, "Error", e.getMessage());
+        }
     }
 
-    @DeleteMapping("/eliminar/{id}")
     @PreAuthorize("hasAuthority('admin:delete')")
-    public void eliminarSkill(@PathVariable long id) {
-        skillServicio.eliminar(id);
+    @DeleteMapping("/eliminar/{id}")
+    public Result eliminarSkill(@PathVariable long id) {
+        try {
+            skillServicio.eliminar(id);
+            return new Result(true, 200, "Success", null);
+        } catch (Exception e) {
+            return new Result(false, 500, "Error", e.getMessage());
+        }
     }
 }
