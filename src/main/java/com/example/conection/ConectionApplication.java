@@ -16,6 +16,7 @@ public class ConectionApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(ConectionApplication.class, args);
+		System.out.println("afasdfasdf");
 	}
 
 
