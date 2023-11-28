@@ -2,17 +2,18 @@ package com.example.conection.dto;
 
 
 
+import com.example.conection.authentication.dto.UserData;
 import lombok.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
 
-
 @Getter
 @Setter
 @Builder
 @AllArgsConstructor
+
 public class Result<T> {
 
     private boolean flag; // Two values: true means success, false means not success
@@ -21,63 +22,82 @@ public class Result<T> {
 
     private String message; // Response message
 
-
+    private String stackTrace;
+    private  String path;
     private LocalDateTime timestamp; // Timestamp for when the response was generated
     private UserData userData ; // User information
 
-    private T data; // The response payload
+    private T dataResponse;
 
+    private T dataRequest;
 
-    private String detailedMessage; // Detailed error message for failures
+    private String exceptionMessage;
 
-    private String exceptionDetails; // Exception details
+    private List detailedMessage; // Detailed error message for failures
 
-
+    private String exceptionName;
 
     public Result() {
         this.timestamp = LocalDateTime.now();
     }
 
-    // Constructor for basic format: boolean, code, message, timestamp, userData
     public Result(boolean flag, Integer code, String message, LocalDateTime timestamp) {
         this.flag = flag;
         this.code = code;
         this.message = message;
         this.timestamp = timestamp;
-
     }
 
-    // Constructor for basic format: boolean, code, message, timestamp, userData
-    public Result(boolean flag, Integer code, String message, LocalDateTime timestamp,UserData userData) {
-        this.flag = flag;
-        this.code = code;
-        this.message = message;
-        this.timestamp = timestamp;
+    public Result(boolean flag, Integer code, String message, LocalDateTime timestamp, T dataResponse) {
+        this(flag, code, message, timestamp);
+        this.dataResponse = dataResponse;
+    }
+
+    public Result(boolean flag, Integer code, String message, LocalDateTime timestamp,UserData userData,T dataResponse) {
+        this(flag, code, message, timestamp);
         this.userData = userData;
+        this.dataResponse = dataResponse;
     }
 
-    public Result(boolean flag, Integer code, String message, LocalDateTime timestamp, T data) {
+    public Result(boolean flag, Integer code, String message, LocalDateTime timestamp, UserData userData, T dataResponse, T dataRequest) {
         this(flag, code, message, timestamp);
-        this.data = data;
+        this.userData = userData;
+        this.dataResponse = dataResponse;
+        this.dataRequest = dataRequest;
     }
 
-    // Constructor for format with data: boolean, code, message, timestamp, userId, data
-    public Result(boolean flag, Integer code, String message, LocalDateTime timestamp, UserData userData, T data) {
-        this(flag, code, message, timestamp, userData);
-        this.data = data;
-    }
 
-    public Result(boolean flag, Integer code, String message, LocalDateTime timestamp, String detailedMessage) {
+
+
+
+    public Result(boolean flag, Integer code, String message,String stackTrace,String path, LocalDateTime timestamp,UserData userData, String exceptionMessage,  String exceptionName) {
         this(flag, code, message, timestamp);
-        this.detailedMessage = String.join(", ", detailedMessage);
+        this.path = path;
+        this.stackTrace = stackTrace;
+        this.userData = userData;
+        this.exceptionMessage = exceptionMessage;
+        this.exceptionName = exceptionName;
+    }
+
+    public Result(boolean flag, Integer code, String message,String stackTrace,String path, LocalDateTime timestamp,UserData userData,String exceptionMessage,  List detailedMessage,  String exceptionName) {
+        this(flag, code, message, timestamp);
+        this.path = path;
+        this.stackTrace = stackTrace;
+        this.userData = userData;
+        this.exceptionName=exceptionMessage;
+        this.detailedMessage = detailedMessage;
+        this.exceptionName = exceptionName;
 
     }
 
-    // Constructor for format with detailedMessage and exceptionDetails: boolean, code, message, timestamp, detailedMessage, exceptionDetails
-    public Result(boolean flag, Integer code, String message, LocalDateTime timestamp,UserData userData, String detailedMessage, String exceptionDetails) {
-        this(flag, code, message, timestamp, userData);
-        this.detailedMessage = String.join(", ", detailedMessage);
-        this.exceptionDetails = String.join(", ", exceptionDetails);
+    public Result(boolean flag, Integer code, String message,String stackTrace,String path, LocalDateTime timestamp,UserData userData, List detailedMessage,  String exceptionName) {
+        this(flag, code, message, timestamp);
+        this.path = path;
+        this.stackTrace = stackTrace;
+        this.userData = userData;
+        this.detailedMessage = detailedMessage;
+        this.exceptionName = exceptionName;
+
     }
 
 
